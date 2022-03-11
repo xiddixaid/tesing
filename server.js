@@ -17,7 +17,7 @@ app.get('/', async (req, res, next) => {
 
     res.json({
       msg: `Welcome to the ${TEST}!`,
-      redisValue: value,
+      redisValue: 'Kashif',
     });
   } catch (error) {
     next(error);
