@@ -1,11 +1,10 @@
 const express = require('express');
-const { createClient } = require('redis');
 
-const redisClient = require('./redis');
+// const redisClient = require('./redis');
 
 require('dotenv').config();
 
-redisClient.connect();
+// redisClient.connect();
 
 const { TEST, PORT } = process.env;
 
@@ -13,8 +12,8 @@ const app = express();
 
 app.get('/', async (req, res, next) => {
   try {
-    await redisClient.set('name', 'Kahisf Ali');
-    const value = await redisClient.get('name');
+    // await redisClient.set('name', 'Kashif Ali');
+    // const value = await redisClient.get('name');
 
     res.json({
       msg: `Welcome to the ${TEST}!`,
