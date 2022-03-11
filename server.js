@@ -4,14 +4,13 @@ const redisClient = require('./redis');
 
 require('dotenv').config();
 
-redisClient.connect();
-
 const { TEST, PORT } = process.env;
 
 const app = express();
 
 app.get('/', async (req, res, next) => {
   try {
+    await redisClient.connect();
     await redisClient.set('name', 'Kashif Ali');
     const value = await redisClient.get('name');
 
