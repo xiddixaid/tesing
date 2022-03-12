@@ -2,14 +2,6 @@ const express = require('express');
 
 import { createClient } from 'redis';
 
-(async () => {
-  const client = createClient();
-
-  client.on('error', (err) => console.log('Redis Client Error', err));
-
-  await client.connect();
-})();
-
 require('dotenv').config();
 
 const { TEST, PORT } = process.env;
