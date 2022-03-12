@@ -15,17 +15,17 @@ app.get('/', (req, res, next) => {
 
 app.get('/api', async (req, res, next) => {
   try {
-    // const client = createClient();
+    const client = createClient();
 
-    // client.on('error', (err) => console.log('Redis Client Error', err));
+    client.on('error', (err) => console.log('Redis Client Error', err));
 
-    // await client.connect();
-    // await client.set('name', 'Kashif Ali');
-    // const value = await client.get('name');
+    await client.connect();
+    await client.set('name', 'Kashif Ali');
+    const value = await client.get('name');
 
     res.json({
       msg: `Welcome to the ${TEST}!`,
-      // redisValue: value,
+      redisValue: value,
     });
   } catch (error) {
     res.status(400);
