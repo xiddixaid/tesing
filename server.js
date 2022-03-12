@@ -1,6 +1,14 @@
 const express = require('express');
 
-const redisClient = require('./redis');
+import { createClient } from 'redis';
+
+(async () => {
+  const client = createClient();
+
+  client.on('error', (err) => console.log('Redis Client Error', err));
+
+  await client.connect();
+})();
 
 require('dotenv').config();
 
@@ -8,18 +16,31 @@ const { TEST, PORT } = process.env;
 
 const app = express();
 
-app.get('/', async (req, res, next) => {
+app.get('/', (req, res, next) => {
+  return res.json({
+    msg: 'Hello, here I am....',
+  });
+});
+
+app.get('/api', async (req, res, next) => {
   try {
-    await redisClient.connect();
-    await redisClient.set('name', 'Kashif Ali');
-    const value = await redisClient.get('name');
+    const client = createClient();
+
+    client.on('error', (err) => console.log('Redis Client Error', err));
+
+    await client.connect();
+    await client.set('name', 'Kashif Ali');
+    const value = await client.get('name');
 
     res.json({
       msg: `Welcome to the ${TEST}!`,
       redisValue: value,
     });
   } catch (error) {
-    next(error);
+    res.status(400);
+    return res.json({
+      msg: error.message,
+    });
   }
 });
 
