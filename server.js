@@ -1,6 +1,6 @@
 const express = require('express');
 
-import { createClient } from 'redis';
+const { createClient } = require('redis');
 
 require('dotenv').config();
 
