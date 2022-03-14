@@ -10,7 +10,6 @@ const { TEST, PORT } = process.env;
 const app = express();
 
 const firstApp = express();
-const secondApp = express();
 
 app.get('/', (req, res, next) => {
   return res.json({
@@ -18,7 +17,7 @@ app.get('/', (req, res, next) => {
   });
 });
 
-secondApp.get('/', async (req, res, next) => {
+firstApp.get('/', async (req, res, next) => {
   try {
     const client = createClient();
 
