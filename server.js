@@ -10,6 +10,7 @@ const { TEST, PORT } = process.env;
 const app = express();
 
 const firstApp = express();
+const secondApp = express();
 
 app.get('/', (req, res, next) => {
   return res.json({
@@ -17,7 +18,7 @@ app.get('/', (req, res, next) => {
   });
 });
 
-firstApp.get('/', async (req, res, next) => {
+secondApp.get('/', async (req, res, next) => {
   try {
     const client = createClient();
 
@@ -39,7 +40,9 @@ firstApp.get('/', async (req, res, next) => {
   }
 });
 
-app.use(vhost('blog.hoxxain.com', firstApp)); // Subdomain
+app.use(vhost('blog.hoxxain.com', firstApp)); // Serves first app
+
+app.use(vhost('*', secondApp)); // Serves second app
 
 const port = parseInt(process.env.PORT, 10) || 5000;
 
