@@ -1,5 +1,7 @@
 const express = require('express');
 
+const vhost = require('vhost');
+
 const { createClient } = require('redis');
 
 require('dotenv').config();
