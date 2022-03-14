@@ -7,13 +7,16 @@ require('dotenv').config();
 const { TEST, PORT } = process.env;
 const app = express();
 
-app.get('/', (req, res, next) => {
+const firstApp = express();
+const secondApp = express();
+
+firstApp.get('/', (req, res, next) => {
   return res.json({
     msg: 'Hello, here I am....',
   });
 });
 
-app.get('/api', async (req, res, next) => {
+secondApp.get('/', async (req, res, next) => {
   try {
     const client = createClient();
 
@@ -34,6 +37,10 @@ app.get('/api', async (req, res, next) => {
     });
   }
 });
+
+appWithVhost.use(vhost('blog.hoxxain.com', firstApp)); // Serves first app
+
+appWithVhost.use(vhost('hoxxain.com', secondApp)); // Serves second app
 
 const port = parseInt(process.env.PORT, 10) || 5000;
 
