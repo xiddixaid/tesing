@@ -43,6 +43,12 @@ secondApp.get('/', async (req, res, next) => {
 app.use(vhost('hoxxain.com', firstApp)); // Serves second app
 app.use(vhost('blog.hoxxain.com', secondApp)); // Serves first app
 
+app.get('*', (req, res, next) => {
+  return res.json({
+    msg: 'App is working..',
+  });
+});
+
 const port = parseInt(process.env.PORT, 10) || 5000;
 
 app.listen(port, () => {
