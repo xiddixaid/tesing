@@ -12,7 +12,7 @@ const app = express();
 const firstApp = express();
 const secondApp = express();
 
-firstApp.get('/', (req, res, next) => {
+app.get('/', (req, res, next) => {
   return res.json({
     msg: 'Hello, here I am....',
   });
@@ -40,9 +40,7 @@ secondApp.get('/', async (req, res, next) => {
   }
 });
 
-app.use(vhost('blog.hoxxain.com', firstApp)); // Serves first app
-
-app.use(vhost('hoxxain.com', secondApp)); // Serves second app
+app.use(vhost('blog.hoxxain.com', firstApp)); // Subdomain
 
 const port = parseInt(process.env.PORT, 10) || 5000;
 
